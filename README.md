@@ -65,3 +65,4 @@ quiz-game/
 | `choices` | 선택지 4개 |
 | `answer` | 정답 번호 (1~4) |
 | `best_score` | 최고 점수. 아직 퀴즈를 풀지 않았다면 `null` |
+clone 실습: 복제한 저장소에서 추가한 문장입니다.
