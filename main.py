@@ -128,8 +128,20 @@ def add_quiz(quizzes):
 
     quizzes.append(Quiz(question, choices, answer))
     print("퀴즈가 추가되었습니다!")
-    
 
+
+def list_quizzes(quizzes):
+    if len(quizzes) == 0:
+        print("[안내] 등록된 퀴즈가 없습니다.")
+        return
+
+    print(f"\n등록된 퀴즈 목록 (총 {len(quizzes)}개)")
+    print("-" * 40)
+    for number, quiz in enumerate(quizzes, start=1):
+        print(f"[{number}] {quiz.question}")
+    print("-" * 40)
+
+        
 def main():
     quizzes = create_default_quizzes()
 
@@ -142,7 +154,7 @@ def main():
         elif choice == 2:
             add_quiz(quizzes)
         elif choice == 3:
-            print("퀴즈 목록은 아직 준비 중입니다.")
+            list_quizzes(quizzes)
         elif choice == 4:
             print("점수 확인은 아직 준비 중입니다.")
         elif choice == 5:
