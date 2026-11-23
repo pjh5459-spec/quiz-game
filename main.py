@@ -243,8 +243,14 @@ class QuizGame:
 
 
 def main():
-    game = QuizGame()
-    game.run()
+    game = None
+    try:
+        game = QuizGame()
+        game.run()
+    except (KeyboardInterrupt, EOFError):
+        print("\n[안내] 입력이 중단되었습니다. 저장 후 안전하게 종료합니다.")
+        if game is not None:
+            game.save_state()
 
 
 main()
