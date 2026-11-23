@@ -45,7 +45,7 @@ def create_default_quizzes():
         ),
     ]
 
-    
+
 def show_menu():
     print("=" * 40)
     print("        나만의 퀴즈 게임")
@@ -58,34 +58,61 @@ def show_menu():
     print("=" * 40)
 
 
-def get_menu_choice():
+def ask_number(prompt, min_value, max_value):
     while True:
-        text = input("선택: ").strip()
+        text = input(prompt).strip()
 
         if text == "":
-            print("[안내] 아무것도 입력하지 않았습니다. 1-5 사이의 숫자를 입력하세요.")
+            print(f"[안내] 아무것도 입력하지 않았습니다. {min_value}-{max_value} 사이의 숫자를 입력하세요.")
             continue
 
         try:
             number = int(text)
         except ValueError:
-            print("[안내] 숫자만 입력할 수 있습니다. 1-5 사이의 숫자를 입력하세요.")
+            print(f"[안내] 숫자만 입력할 수 있습니다. {min_value}-{max_value} 사이의 숫자를 입력하세요.")
             continue
 
-        if number < 1 or number > 5:
-            print("[안내] 1-5 사이의 숫자를 입력하세요.")
+        if number < min_value or number > max_value:
+            print(f"[안내] {min_value}-{max_value} 사이의 숫자를 입력하세요.")
             continue
 
         return number
 
 
+def play_quiz(quizzes):
+    if len(quizzes) == 0:
+        print("[안내] 등록된 퀴즈가 없습니다. 먼저 퀴즈를 추가해 주세요.")
+        return None
+
+    total = len(quizzes)
+    correct = 0
+    print(f"\n퀴즈를 시작합니다! (총 {total}문제)")
+
+    for number, quiz in enumerate(quizzes, start=1):
+        quiz.show(number)
+        user_answer = ask_number("정답 입력: ", 1, 4)
+        if quiz.is_correct(user_answer):
+            print("정답입니다!")
+            correct += 1
+        else:
+            print(f"오답입니다. 정답은 {quiz.answer}번입니다.")
+
+    score = correct * 100 // total
+    print("=" * 40)
+    print(f"결과: {total}문제 중 {correct}문제 정답! ({score}점)")
+    print("=" * 40)
+    return score
+
+
 def main():
+    quizzes = create_default_quizzes()
+
     while True:
         show_menu()
-        choice = get_menu_choice()
+        choice = ask_number("선택: ", 1, 5)
 
         if choice == 1:
-            print("퀴즈 풀기는 아직 준비 중입니다.")
+            play_quiz(quizzes)
         elif choice == 2:
             print("퀴즈 추가는 아직 준비 중입니다.")
         elif choice == 3:
